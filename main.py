@@ -1,4 +1,5 @@
 from config import get_settings
+# used for testing
 
 base_url = get_settings().base_url
 print(f'base: {base_url}')

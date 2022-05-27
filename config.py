@@ -1,4 +1,5 @@
 from pydantic import BaseSettings
+from functools import lru_cache
 
 # Create subclass of BaseSettings called Settings to create env variables
 class Settings(BaseSettings):
@@ -8,7 +9,11 @@ class Settings(BaseSettings):
 
 # 
 # Function returns instances of Settings class to provide caching options
+# Add LRU cache stragey with functools using lru_cache decorator for get_settings function
+# decortator shows loading setting only once and not for each setting 
+# decreases load on compute resources 
 #
+@lru_cache
 def get_settings() -> Settings:
     settings = Settings()
     print(f"### Loading settings for: {settings.env_name}")
