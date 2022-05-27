@@ -8,3 +8,4 @@ Using Python and FastAPI to build URL Shortner API
     >>>> Please add .env to your .gitignore file
 
 2.) Set up url shortner
+    >>>> run server with cmd: uvicorn url_shortener_app.main:app --reload
