@@ -1,9 +1,8 @@
-from config import get_settings
-# used for testing
+from fastapi import FastAPI
 
-base_url = get_settings().base_url
-print(f'base: {base_url}')
+app = FastAPI()
 
-dburl = get_settings().db_url
-print(f'db: {dburl}')
+@app.get("/")
+def read_root():
+    return 'This is url shortner'
 

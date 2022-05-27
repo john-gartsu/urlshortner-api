@@ -7,6 +7,13 @@ class Settings(BaseSettings):
     base_url: str = 'http://localhost:8000'
     db_url: str = 'sqlite:///./shortner.db'
 
+    # 
+    # create subclass to load .env file to adjust settings per environment
+    #Loads in development env
+    #
+    class Config:
+        env_file = '.env'
+
 # 
 # Function returns instances of Settings class to provide caching options
 # Add LRU cache stragey with functools using lru_cache decorator for get_settings function
