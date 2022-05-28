@@ -1,5 +1,8 @@
 import secrets
-from fastapi import Depends, FastAPI, HTTPException
+from urllib import request
+from fastapi import Depends, FastAPI, HTTPException, Request
+# created routes to redirect shortenedURL to target url 
+from fastapi.responses import RedirectResponse
 import validators
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine
@@ -23,6 +26,11 @@ def get_db():
 def raise_bad_request(msg):
     raise HTTPException(status_code=400, detail=msg)
 
+# not found exception for handling 404 
+def raise_not_found(req):
+    message = f"URL '{req.url}' does not exist"
+    raise HTTPException(status_code=400, detail=message)
+
 #
 # path op dectorator to associate root path for GET requests
 # fastapi listens to root path & tells all incoming get req to go to read_root() fn
@@ -33,6 +41,26 @@ def raise_bad_request(msg):
 def read_root():
     # return string when request to root path is sent
     return 'This is url shortner'
+
+# GET method for url_key
+@app.get("/{url_key}")
+def forward_to_target_url(
+        url_key: str,
+        req: Request,
+        db: Session = Depends(get_db)
+    ):
+    db_url = (
+        db.query(models.URL)
+        .filter(models.URL.key == url_key, models.URL.is_active)
+        .first()
+    )
+    if db_url:
+        return RedirectResponse(db_url.target_url)
+    else:
+        raise_not_found(request)
+
+
+
 
 # POST METHOD
 @app.post("/url", response_model=schemas.URLInfo)
