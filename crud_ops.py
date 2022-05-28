@@ -8,6 +8,12 @@ import keygen
 import models
 import schemas
 
+# update visitor count to shortened url
+def update_db_clicks(db: Session, db_url: schemas.URL) -> models.URL:
+    db_url.clicks += 1
+    db.commit()
+    db.refresh(db_url)
+    return db_url
 
 # create db_url using unique key (added logic in current sprint)
 def create_db_url(db: Session, url: schemas.URLBase) -> models.URL:
@@ -48,7 +54,3 @@ def get_db_url_by_secret_key(db: Session, secret_key: str) -> models.URL:
         .filter(models.URL.secret_key == secret_key, models.URL.is_active)
         .first()
     )
-
-
-
-

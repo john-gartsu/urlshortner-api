@@ -60,7 +60,10 @@ def read_root():
     # return string when request to root path is sent
     return 'This is url shortner'
 
+# 
 # GET method for url_key
+# Addng update_db_keys fn
+# 
 @app.get("/{url_key}")
 def forward_to_target_url(
         url_key: str,
@@ -68,6 +71,9 @@ def forward_to_target_url(
         db: Session = Depends(get_db)
     ):
     if db_url := crud_ops.get_db_url_by_key(db=db, url_key=url_key):
+        # added logic to update db clicks when shortened url visited
+        crud_ops.update_db_clicks(db=db, db_url=db_url)
+        # @delete forward?
         return RedirectResponse(db_url.target_url)
     else:
         raise_not_found(request)

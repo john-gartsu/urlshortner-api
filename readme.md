@@ -16,5 +16,7 @@ Using Python and FastAPI to build URL Shortner API
 4. Manage && Save urls in db sql lite
    a. create admin endpoint to view info about url accessed only by user with secret key
 
+   b. update visitor count
+
 ### debug journey
 1. Validation Error was actually ln 32 in crud ops typo- AttributeError: module 'models' has no attribute 'URl' - l not L upper
