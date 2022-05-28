@@ -14,6 +14,7 @@ def create_db_url(db: Session, url: schemas.URLBase) -> models.URL:
     # try:
     key = keygen.create_unique_random_key(db)
     secret_key = f"{key}_{keygen.create_random_key(length=12)}"
+    print(secret_key)
     db_url = models.URL(
         target_url=url.target_url, key=key, secret_key=secret_key
     )
@@ -28,7 +29,11 @@ def create_db_url(db: Session, url: schemas.URLBase) -> models.URL:
 # returns None or a db entry with a provded key
 def get_db_url_by_key(db: Session, url_key: str) -> models.URL:
     return (
-        db.query(models.URl)
+        # cause of error 
+        # db.query(models.URl)
+        db.query(models.URL)
         .filter(models.URL.key == url_key, models.URL.is_active)
         .first()
     )
+
+
