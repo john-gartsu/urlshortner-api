@@ -10,3 +10,11 @@ Using Python and FastAPI to build URL Shortner API
 
 2.) Set up url shortner
     >>>> run server with cmd: uvicorn url_shortener_app.main:app --reload
+
+3. Clean code
+
+4. Manage && Save urls in db sql lite
+   a. create admin endpoint to view info about url accessed only by user with secret key
+
+### debug journey
+1. Validation Error was actually ln 32 in crud ops typo- AttributeError: module 'models' has no attribute 'URl' - l not L upper

@@ -36,4 +36,19 @@ def get_db_url_by_key(db: Session, url_key: str) -> models.URL:
         .first()
     )
 
+# 
+# Create access to url by using secret key
+# fn checks ur db for an active db entry w/ secret key provided
+# if db entry found, returns entry or None
+# return data in main with get_url_info() fn call
+# 
+def get_db_url_by_secret_key(db: Session, secret_key: str) -> models.URL:
+    return (
+        db.query(models.URL)
+        .filter(models.URL.secret_key == secret_key, models.URL.is_active)
+        .first()
+    )
+
+
+
 

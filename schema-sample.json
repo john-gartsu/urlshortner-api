@@ -1,0 +1,7 @@
+{
+    "target_url": "https://some-website.com",
+    "is_active": true,
+    "clicks": 0,
+    "url": "key",
+    "admin_url": "key + secret key"
+  }
