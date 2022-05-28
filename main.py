@@ -2,7 +2,7 @@ import secrets
 from fastapi import Depends, FastAPI, HTTPException
 import validators
 from sqlalchemy.orm import Session
-from .database import SessionLocal, engine
+from database import SessionLocal, engine
 # from . import schemas, models
 import schemas
 import models
@@ -28,6 +28,7 @@ def raise_bad_request(msg):
 # fastapi listens to root path & tells all incoming get req to go to read_root() fn
 # uses uvicorn as server
 # GET METHOD
+#
 @app.get("/")
 def read_root():
     # return string when request to root path is sent
