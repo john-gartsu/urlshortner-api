@@ -20,8 +20,8 @@ def get_db():
     db = SessionLocal()
     try:
         yield db
-    except:
-        return f'Error occurred get_db fn'
+    # except:
+    #     return f'Error occurred get_db fn'
     finally:
         db.close()
 
@@ -49,7 +49,7 @@ def read_root():
 @app.get("/{url_key}")
 def forward_to_target_url(
         url_key: str,
-        req: Request,
+        request: Request,
         db: Session = Depends(get_db)
     ):
     db_url = (
@@ -67,8 +67,6 @@ def forward_to_target_url(
         return RedirectResponse(db_url.target_url)
     else:
         raise_not_found(request)
-
-
 
 
 # POST METHOD
