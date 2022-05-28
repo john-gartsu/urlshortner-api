@@ -57,7 +57,13 @@ def forward_to_target_url(
         .filter(models.URL.key == url_key, models.URL.is_active)
         .first()
     )
-    if db_url:
+    # 
+    # @previous
+    # if db_url:
+    # new: using assignment expression := walrus operator (assign var in middle of an expression)
+    # if db__url is db entry, then redirect to target_url (longer url)
+    # 
+    if db_url := crud_ops.get_db_url_by_key(db=db, url_key=url_key):
         return RedirectResponse(db_url.target_url)
     else:
         raise_not_found(request)
