@@ -1,12 +1,15 @@
-import secrets
+# deprecated used in keygen mod
+# import secrets
+
 from urllib import request
 from fastapi import Depends, FastAPI, HTTPException, Request
 # created routes to redirect shortenedURL to target url 
 from fastapi.responses import RedirectResponse
 import validators
 from sqlalchemy.orm import Session
+# custom mods
 from database import SessionLocal, engine
-# from . import schemas, models
+import crud_ops
 import schemas
 import models
 # instantiate FastAPI class
@@ -67,19 +70,30 @@ def forward_to_target_url(
 def create_url(url: schemas.URLBase, db: Session = Depends(get_db)):
     try:
         if not validators.url(url.target_url):
-            raise_bad_request(msg="### URL not valid")
+            raise_bad_request(msg="### The URL is not valid")
         
+        ''' deprecated method, using keygen mod in crud_ops module
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         key = "".join(secrets.choice(chars) for _ in range(5))
         secret_key = "".join(secrets.choice(chars) for _ in range(8))
+        # crud_ops module creates db_url with fn
         db_url = models.URL(
             target_url = url.target_url, key=key, secret_key=secret_key
         )
+        '''
+        # create db_url using crud_ops fn, get db object back
+        db_url = crud_ops.create_db_url(db=db, url=url)
+        '''
+        #deprecated
         db.add(db_url)
         db.commit()
         db.refresh(db_url)
         db_url.url = key
         db_url.admin_url = secret_key
+        '''
+        # add key to request/resp
+        db_url.url = db_url.key
+        db_url.admin_url = db_url.secret_key
 
         return db_url
     except:
