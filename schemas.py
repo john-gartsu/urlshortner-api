@@ -6,10 +6,11 @@ implement type hinting to verify request & resp match data types defined
 '''
 
 from pydantic import BaseModel
-
+#
 # create pydantic base models for api req && response
 # Basemodel defines URLBase class 
 # URLBase clas has target_url str to store the url that ur shortened url fwds to
+#
 class URLBase(BaseModel):
     target_url: str
 

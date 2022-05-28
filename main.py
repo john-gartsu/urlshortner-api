@@ -57,3 +57,7 @@ def create_url(url: schemas.URLBase, db: Session = Depends(get_db)):
     except:
         return f'### Error: create_url fn error in post request...'
     # return f'TODO: Create DB Entry for: {url.target_url}'
+
+# @local-testing
+# db=SessionLocal()
+# print(db.query(models.URL).all())

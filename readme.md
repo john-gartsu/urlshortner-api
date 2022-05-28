@@ -6,6 +6,7 @@ Using Python and FastAPI to build URL Shortner API
     >>>> Added .env_sample file for 12-factor app method, this is only      sample for how to make .env that will be gitignored
 
     >>>> Please add .env to your .gitignore file
+    >>> activate venv: source venv/bin/activate  (mac/linux)
 
 2.) Set up url shortner
     >>>> run server with cmd: uvicorn url_shortener_app.main:app --reload
