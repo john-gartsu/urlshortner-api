@@ -9,7 +9,7 @@ Using Python and FastAPI to build URL Shortner API
     >>> activate venv: source venv/bin/activate  (mac/linux)
 
 2.) Set up url shortner
-    >>>> run server with cmd: uvicorn url_shortener_app.main:app --reload
+    >>>> run server with cmd: uvicorn main:app --reload
 
 3. Clean code
 
@@ -17,6 +17,7 @@ Using Python and FastAPI to build URL Shortner API
    a. create admin endpoint to view info about url accessed only by user with secret key
 
    b. update visitor count
+   c. add delete url functionality
 
 ### debug journey
 1. Validation Error was actually ln 32 in crud ops typo- AttributeError: module 'models' has no attribute 'URl' - l not L upper

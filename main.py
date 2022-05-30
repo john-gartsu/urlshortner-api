@@ -1,6 +1,7 @@
 # deprecated used in keygen mod
 # import secrets
 
+from email import message
 from urllib import request
 from fastapi import Depends, FastAPI, HTTPException, Request
 # created routes to redirect shortenedURL to target url 
@@ -119,3 +120,15 @@ def create_url(url: schemas.URLBase, db: Session = Depends(get_db)):
 # @local-testing
 # db=SessionLocal()
 # print(db.query(models.URL).all())
+
+# 
+# DELETE METHOD
+# 
+@app.delete("/admin/{secret_key}")
+def delete_url(secret_key: str, request: Request, db: Session = Depends(get_db)):
+    # change to try catch # @future-feature
+    if db_url := crud_ops.deactivate_db_url_by_secret_key(db, secret_key=secret_key):
+        message = f'### Sucessfully deleted shortened url: {db_url.target_url}'
+        return {"detail": message}
+    else:
+        raise_not_found(request)
